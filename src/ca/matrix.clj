@@ -49,10 +49,6 @@
   (MatrixOps/zAssign8Neighbors board result rule-fn)
   result)
 
-(defn par-apply-window-fn! [^cern.colt.matrix.tint.IntMatrix2D board
-                            ^cern.colt.matrix.tint.IntMatrix2D result
-                            ^Int9Function rule-fn split-n]
-  (let [board-views (split-into-views board split-n)
-        result-views (split-into-views result split-n)]
-    (doall (pmap #(apply-window-fn! %1 %2 rule-fn) board-views result-views)))
+(defn par-apply-window-fn! [result board-views result-views ^Int9Function rule-fn]
+  (doall (pmap #(apply-window-fn! %1 %2 rule-fn) board-views result-views))
   result)
