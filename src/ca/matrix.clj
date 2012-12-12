@@ -1,44 +1,21 @@
 (ns ca.matrix
-  (:import [cern.colt.function.tdouble Double9Function DoubleFunction]
-           [cern.jet.math.tdouble DoubleFunctions]
-           [cern.colt.matrix.tdouble.impl DenseDoubleMatrix2D]
-           [cern.colt.matrix.tdouble DoubleFactory2D]
-           [cern.colt.matrix.tint IntFactory2D]
+  (:import [cern.colt.matrix.tint IntFactory2D]
            [cern.jet.math.tint IntFunctions]
            [ca.parallelcolt.matrix Int9Function MatrixOps]))
 
 (set! *warn-on-reflection* true)
 
-(defn rand-board-d [r c]
-  (.assign (.random DoubleFactory2D/dense r c) (DoubleFunctions/round 1.0)))
-
-(defn window-fn-d [f]
-  (reify
-    Double9Function
-    (apply [_ a00 a01 a02 a10 a11 a12 a20 a21 a22]
-      (f a00 a01 a02 a10 a11 a12 a20 a21 a22))))
-
-(defn rand-board-i [r c]
+(defn rand-board [r c]
   (.assign (.random IntFactory2D/dense r c) (IntFunctions/and 1)))
 
-(defn window-fn-i [f]
+(defn window-fn [f]
   (reify
     Int9Function
     (apply [_ a00 a01 a02 a10 a11 a12 a20 a21 a22]
       (f a00 a01 a02 a10 a11 a12 a20 a21 a22))))
 
-(defn val-converter [mat]
-  (condp instance? mat
-    cern.colt.matrix.tint.IntMatrix2D int
-    cern.colt.matrix.tdouble.DoubleMatrix2D double))
-
-(defn window-fn [mat f]
-  (condp instance? mat
-    cern.colt.matrix.tint.IntMatrix2D (window-fn-i f)
-    cern.colt.matrix.tdouble.DoubleMatrix2D (window-fn-d f)))
-
 (defn set-borders! [mat val]
-  (let [val ((val-converter mat) val)
+  (let [val (int val)
         rows (.rows mat) cols (.columns mat)]
     (.assign (.viewRow mat 0) val)
     (.assign (.viewRow mat (dec rows)) val)
