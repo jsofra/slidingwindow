@@ -1,4 +1,4 @@
-package ca.parallelcolt.matrix;
+package slidingwindow.parallelcolt.matrix;
 
 /*
 Copyright (C) 1999 CERN - European Organization for Nuclear Research.
@@ -12,11 +12,11 @@ It is provided "as is" without expressed or implied warranty.
 * Interface that represents a function object: a function that takes 9
 * arguments and returns a single value.
 */
-public interface Int9Function {
+public interface DComplex4Function {
 /**
 * Applies a function to nine arguments.
 *
 * @return the result of the function.
 */
-    abstract public int apply(int a00, int a01, int a02, int a10, int a11, int a12, int a20, int a21, int a22);
+    abstract public int apply(double[] a01, double[] a10, double[] a11, double[] a12, double[] a21);
 }

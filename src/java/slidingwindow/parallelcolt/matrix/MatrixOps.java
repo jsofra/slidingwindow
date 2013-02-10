@@ -1,13 +1,10 @@
-package ca.parallelcolt.matrix;
+package slidingwindow.parallelcolt.matrix;
 
 import cern.colt.matrix.tint.IntMatrix2D;
-import ca.parallelcolt.matrix.Int9Function;
+import slidingwindow.parallelcolt.matrix.Int9Function;
 
 import cern.colt.matrix.tdouble.DoubleMatrix2D;
 import cern.colt.function.tdouble.Double9Function;
-
-import cern.colt.matrix.tdcomplex.DComplexMatrix2D;
-import ca.parallelcolt.matrix.DComplex4Function;
 
 public class MatrixOps {
 
@@ -50,29 +47,5 @@ public class MatrixOps {
             }
         }
     }
-
-    /*
-    public static void zAssign4Neighbors(DComplex4Function function, DoubleMatrix2D ... mats) {
-        DoubleMatrix2D A = mats[0];
-        int r = A.rows() - 1;
-        int c = A.columns() - 1;
-        int a01, a10, a11, a12, a21;
-        for (int i = 1; i < r; i++) {
-            a10 = A.getQuick(i, 0);
-            a11 = A.getQuick(i, 1);
-
-            for (int j = 1; j < c; j++) {
-                a01 = A.getQuick(i - 1, j);
-                a12 = A.getQuick(i, j + 1);
-                a21 = A.getQuick(i + 1, j);
-
-                B.setQuick(i, j, function.apply(a01, a10, a11, a12, a21));
-
-                a10 = a11;
-                a11 = a12;
-            }
-        }
-    }
-    */
 
 }

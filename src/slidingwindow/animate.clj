@@ -1,9 +1,9 @@
-(ns ca.animate
+(ns slidingwindow.animate
   (:import [javax.swing JPanel JFrame]
            [java.util Timer TimerTask]
            [java.awt Color Graphics2D Toolkit]
            [javax.imageio ImageIO])
-  (:require [ca.core :as ca]
+  (:require [slidingwindow.core :as core]
             [clojure.java.io :as io]))
 
 (defn panel [image-fn frm]

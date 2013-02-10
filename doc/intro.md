@@ -1,3 +1,1 @@
-# Introduction to ca
-
-TODO: write [great documentation](http://jacobian.org/writing/great-documentation/what-to-write/)
+This is just a test of writing some fast sliding window code use parallel colt from clojure.

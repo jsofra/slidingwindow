@@ -1,4 +1,4 @@
-(ns ca.gui-painter
+(ns slidingwindow.gui-painter
   (:require [seesaw.core :as ss]
             [seesaw.mouse :as ssm]
             [seesaw.color :as ssc]

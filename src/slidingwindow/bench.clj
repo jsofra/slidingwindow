@@ -1,6 +1,6 @@
-(ns ca.bench
-  (:require [ca.matrix :as m])
-  (:use criterium.core ca.core))
+(ns slidingwindow.bench
+  (:require [slidingwindow.matrix :as m])
+  (:use criterium.core slidingwindow.core))
 
 (defn bench-gol [w h]
   (let [remaining-boards (atom (board-seq (m/set-borders! (m/rand-board w h) 0)))
