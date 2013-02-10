@@ -42,7 +42,7 @@
 (defn split-into-views
   "Splits a matrix into n number of views.
    These views can be used to write back into the matrix."
-  [mat n]
+  [^cern.colt.matrix.tint.IntMatrix2D mat n]
   (let [r (.rows mat) c (.columns mat)
         step (int (/ r n))
         start-rows (concat (butlast (take (inc n) (iterate #(+ % step) 0))) [(dec r)])]
@@ -60,6 +60,8 @@
 
 (defn par-apply-window-fn!
   "Same as apply-window-fn! but uses pmap to apply the fn to the views in parallel."
-  [result board-views result-views ^Int9Function rule-fn]
+  [^cern.colt.matrix.tint.IntMatrix2D result
+   ^cern.colt.matrix.tint.IntMatrix2D board-views
+   result-views ^Int9Function rule-fn]
   (doall (pmap #(apply-window-fn! %1 %2 rule-fn) board-views result-views))
   result)

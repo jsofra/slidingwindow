@@ -8,7 +8,7 @@
                                    (m/window-fn game-of-life-rule))]
     (bench (next-board!))))
 
-(defn par-bench-gol [w h splits]
+(defn par-bench-gol [w h & {:keys [splits] :or {splits 2}}]
   (let [remaining-boards (atom (board-view-seq
                                 (m/set-borders! (m/rand-board w h) 0) splits))
         next-board! (par-next-board-fn remaining-boards
