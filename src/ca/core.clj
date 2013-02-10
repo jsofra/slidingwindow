@@ -9,20 +9,9 @@
 (defn board-seq [init-board]
   (iterate reverse [init-board (.copy init-board)]))
 
-(defn board-view-seq [init-board splits]
-  (let [result-board (.copy init-board)
-        init-board-views (m/split-into-views init-board splits)
-        result-board-views (m/split-into-views result-board splits)]
-    (iterate reverse [[init-board init-board-views]
-                      [result-board result-board-views]])))
-
 (defn next-board-fn [remaining-boards rule-fn]
   #(let [[b r] (first (swap! remaining-boards rest))]
      (m/apply-window-fn! b r rule-fn)))
-
-(defn par-next-board-fn [remaining-boards rule-fn]
-  #(let [[[b bv] [r rv]] (first (swap! remaining-boards rest))]
-     (m/par-apply-window-fn! r bv rv rule-fn)))
 
 (defn start-gui [board rule-fn]
   (let [remaining-boards (atom (board-seq (m/set-borders! board 0)))
@@ -30,6 +19,20 @@
         next-board! (next-board-fn remaining-boards (m/window-fn rule-fn))
         next-img! #(m/set-pixels! init-image (next-board!))]
     (gui/start next-img! (.columns board) (.rows board))))
+
+
+;; parallel versions
+t
+(defn board-view-seq [init-board splits]
+  (let [result-board (.copy init-board)
+        init-board-views (m/split-into-views init-board splits)
+        result-board-views (m/split-into-views result-board splits)]
+    (iterate reverse [[init-board init-board-views]
+                      [result-board result-board-views]])))
+
+(defn par-next-board-fn [remaining-boards rule-fn]
+  #(let [[[b bv] [r rv]] (first (swap! remaining-boards rest))]
+     (m/par-apply-window-fn! r bv rv rule-fn)))
 
 (defn par-start-gui [board rule-fn & {:keys [splits] :or {splits 2}}]
   (let [remaining-boards (atom (board-view-seq (m/set-borders! board 0) splits))
